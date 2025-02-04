@@ -1,9 +1,15 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
 import { useCart } from '../store/useCart';
 import { Trash2, MinusCircle, PlusCircle } from 'lucide-react';
+import { useState } from 'react';
+import Modal from './modals/ConfirmQuantityModal'; // Import the Modal component
+import { CartItem } from '../types'; // Adjust the import based on your file structure
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, total } = useCart();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<CartItem | null>(null); // Set the type to CartItem or null
+  const navigate = useNavigate(); // Initialize useNavigate
 
   if (items.length === 0) {
     return (
@@ -16,6 +22,27 @@ export default function CartPage() {
       </div>
     );
   }
+
+  const handleProceedToCheckout = () => {
+    const duplicateItems = items.filter(item => item.quantity > 1);
+    if (duplicateItems.length > 0) {
+      setSelectedItem(duplicateItems[0]); // Set the first duplicate item for the modal
+      setIsModalOpen(true);
+    } else {
+      // Navigate to checkout directly if no duplicates
+      navigate('/checkout'); // Navigate to checkout
+    }
+  };
+
+  const handleConfirmCheckout = () => {
+    setIsModalOpen(false);
+    // Navigate to checkout page
+    navigate('/checkout'); // Navigate to checkout
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="space-y-8">
@@ -61,13 +88,21 @@ export default function CartPage() {
           <span className="text-lg font-semibold text-gray-900">Total:</span>
           <span className="text-2xl font-bold text-gray-900">₹{total}</span>
         </div>
-        <Link
-          to="/checkout"
+        <button
+          onClick={handleProceedToCheckout}
           className="w-full block text-center px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
         >
           Proceed to Checkout
-        </Link>
+        </button>
       </div>
+
+      {/* Modal for confirming checkout */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onConfirm={handleConfirmCheckout}
+        selectedItem={selectedItem} // Pass the selected item to the modal
+      />
     </div>
   );
 }
