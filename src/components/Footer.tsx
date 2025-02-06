@@ -12,7 +12,7 @@ export default function Footer() {
           
           <div className="flex items-center space-x-6">
             <a
-              href="https://github.com/yourusername"
+              href="https://github.com/ADITYAPIMPALE11127?tab=overview&from=2025-02-01&to=2025-02-06"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-600 hover:text-blue-600 transition-colors"
@@ -20,7 +20,7 @@ export default function Footer() {
               <Github className="h-6 w-6" />
             </a>
             <a
-              href="https://linkedin.com/in/yourusername"
+              href="https://www.linkedin.com/in/aditya-pimpale-40a09b214/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-600 hover:text-blue-600 transition-colors"
@@ -28,7 +28,7 @@ export default function Footer() {
               <Linkedin className="h-6 w-6" />
             </a>
             <a
-              href="mailto:your.email@example.com"
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=pimpaleaditya2@gmail.com"
               className="text-gray-600 hover:text-blue-600 transition-colors"
             >
               <Mail className="h-6 w-6" />
